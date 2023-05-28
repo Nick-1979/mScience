@@ -43,7 +43,7 @@ async function uploadFileToGitHub() {
   const owner = process.env.GITHUB_USERNAME;
   const repo = process.env.GITHUB_REPO_NAME;
   const filePath = 'data.json';
-  const branch = 'main'; // or specify the branch you want to update
+  const branch = 'master'; // or specify the branch you want to update
 
   const fileData = fs.readFileSync(filePath);
 
