@@ -29,7 +29,7 @@ async function fetchPolkadotData() {
     fs.writeFileSync('data.json', json);
 
     const numRecords = response.data.results.length;
-    console.log(`Data file updated successfully! ${numRecords} records fetched.`);
+    console.log(`Local data file updated successfully! ${numRecords} records fetched. Going to upload to Github ...`);
 
     // Upload the file to GitHub
     uploadFileToGitHub();
@@ -45,24 +45,38 @@ async function uploadFileToGitHub() {
   const filePath = 'data.json';
   const branch = 'master'; // or specify the branch you want to update
 
-  const fileData = fs.readFileSync(filePath);
+  const fileData = fs.readFileSync(filePath).toString('base64');
+
+  // Get the current SHA of the file
+  let sha = '';
+  try {
+    const { data } = await octokit.repos.getContent({
+      owner,
+      repo,
+      path: filePath,
+      ref: branch,
+    });
+    sha = data.sha;
+  } catch (error) {
+    console.log('File does not exist on GitHub. Creating a new file.');
+  }
 
   try {
-    const { data: { commit } } = await octokit.repos.createOrUpdateFileContents({
+    const { data } = await octokit.repos.createOrUpdateFileContents({
       owner,
       repo,
       path: filePath,
       message: 'Update data file',
-      content: fileData.toString('base64'),
+      content: fileData,
       branch,
+      sha
     });
 
-    console.log('File uploaded successfully. Commit:', commit);
+    console.log('File uploaded successfully. Commit:', data.commit);
   } catch (error) {
     console.error('Error uploading file:', error);
   }
 }
-
 
 // Run the fetch script immediately
 fetchPolkadotData();
