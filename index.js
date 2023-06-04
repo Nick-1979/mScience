@@ -72,7 +72,7 @@ async function uploadFileToGitHub() {
       sha
     });
 
-    console.log('File uploaded successfully. Commit:', data.commit);
+    console.log('File uploaded successfully. Commit:', data.commit.html_url);
   } catch (error) {
     console.error('Error uploading file:', error);
   }
