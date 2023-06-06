@@ -14,5 +14,5 @@ GITHUB_REPO_NAME= ....
 
 #To run:
 - npm install
-- node index
+- node index (or nohup ./node index &)
 
