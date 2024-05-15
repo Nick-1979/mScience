@@ -82,4 +82,5 @@ async function uploadFileToGitHub() {
 fetchPolkadotData();
 
 // Then schedule the fetch task to run every 12 hours
-cron.schedule('0 */12 * * *', fetchPolkadotData);
+// Since Now its is run by Github Actions periodically hence the following line is commented
+// cron.schedule('0 */12 * * *', fetchPolkadotData);
