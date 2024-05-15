@@ -40,8 +40,8 @@ async function fetchPolkadotData() {
 }
 
 async function uploadFileToGitHub() {
-  const owner = process.env.GITHUB_USERNAME;
-  const repo = process.env.GITHUB_REPO_NAME;
+  const owner = process.env.USERNAME;
+  const repo = process.env.REPO_NAME;
   const filePath = 'data.json';
   const branch = 'master'; // or specify the branch you want to update
 
